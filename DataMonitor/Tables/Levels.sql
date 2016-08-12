@@ -1,0 +1,5 @@
+﻿CREATE TABLE [dbo].[Levels]
+(
+	[Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY, 
+    [Name] NCHAR(50) NOT NULL
+)

@@ -1,0 +1,527 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataMonitorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DBServer" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Database" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Levels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Metrics">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SourceId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Notifications">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sources">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Table" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Threasholds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Percentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Watchers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LevelId" Type="int" Nullable="false" />
+          <Property Name="ClientId" Type="int" />
+          <Property Name="SourceId" Type="int" />
+          <Property Name="MetricId" Type="int" />
+          <Property Name="ThreasholdId" Type="int" Nullable="false" />
+          <Property Name="NotificationId" Type="int" Nullable="false" />
+          <Property Name="LastValue" Type="bigint" />
+        </EntityType>
+        <Association Name="FK_Metrics_ToSources">
+          <End Role="Sources" Type="Self.Sources" Multiplicity="1" />
+          <End Role="Metrics" Type="Self.Metrics" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sources">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Metrics">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sources_ToClients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Sources" Type="Self.Sources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sources">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToClients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToLevels">
+          <End Role="Levels" Type="Self.Levels" Multiplicity="1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Levels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToMetrics">
+          <End Role="Metrics" Type="Self.Metrics" Multiplicity="0..1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metrics">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="MetricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToNotifications">
+          <End Role="Notifications" Type="Self.Notifications" Multiplicity="1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notifications">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToSources">
+          <End Role="Sources" Type="Self.Sources" Multiplicity="0..1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sources">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToThreasholds">
+          <End Role="Threasholds" Type="Self.Threasholds" Multiplicity="1" />
+          <End Role="Watchers" Type="Self.Watchers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Threasholds">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watchers">
+              <PropertyRef Name="ThreasholdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataMonitorModelStoreContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Levels" EntityType="Self.Levels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Metrics" EntityType="Self.Metrics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notifications" EntityType="Self.Notifications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sources" EntityType="Self.Sources" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Threasholds" EntityType="Self.Threasholds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Watchers" EntityType="Self.Watchers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Metrics_ToSources" Association="Self.FK_Metrics_ToSources">
+            <End Role="Sources" EntitySet="Sources" />
+            <End Role="Metrics" EntitySet="Metrics" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sources_ToClients" Association="Self.FK_Sources_ToClients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Sources" EntitySet="Sources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToClients" Association="Self.FK_Watchers_ToClients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToLevels" Association="Self.FK_Watchers_ToLevels">
+            <End Role="Levels" EntitySet="Levels" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToMetrics" Association="Self.FK_Watchers_ToMetrics">
+            <End Role="Metrics" EntitySet="Metrics" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToNotifications" Association="Self.FK_Watchers_ToNotifications">
+            <End Role="Notifications" EntitySet="Notifications" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToSources" Association="Self.FK_Watchers_ToSources">
+            <End Role="Sources" EntitySet="Sources" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToThreasholds" Association="Self.FK_Watchers_ToThreasholds">
+            <End Role="Threasholds" EntitySet="Threasholds" />
+            <End Role="Watchers" EntitySet="Watchers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataMonitorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DBServer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Database" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sources" Relationship="Self.FK_Sources_ToClients" FromRole="Clients" ToRole="Sources" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToClients" FromRole="Client" ToRole="Watcher" />
+        </EntityType>
+        <EntityType Name="Level">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToLevels" FromRole="Level" ToRole="Watcher" />
+        </EntityType>
+        <EntityType Name="Metric">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="SourceId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Source" Relationship="Self.FK_Metrics_ToSources" FromRole="Metrics" ToRole="Sources" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToMetrics" FromRole="Metric" ToRole="Watcher" />
+        </EntityType>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToNotifications" FromRole="Notification" ToRole="Watcher" />
+        </EntityType>
+        <EntityType Name="Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Table" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="Self.FK_Sources_ToClients" FromRole="Sources" ToRole="Clients" />
+          <NavigationProperty Name="Metrics" Relationship="Self.FK_Metrics_ToSources" FromRole="Sources" ToRole="Metrics" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToSources" FromRole="Source" ToRole="Watcher" />
+        </EntityType>
+        <EntityType Name="Threashold">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Percentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Watchers" Relationship="DataMonitorModel.FK_Watchers_ToThreasholds" FromRole="Threashold" ToRole="Watcher" />
+        </EntityType>
+        <Association Name="FK_Sources_ToClients">
+          <End Role="Clients" Type="Self.Client" Multiplicity="1" />
+          <End Role="Sources" Type="Self.Source" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sources">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Metrics_ToSources">
+          <End Role="Sources" Type="Self.Source" Multiplicity="1" />
+          <End Role="Metrics" Type="Self.Metric" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sources">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Metrics">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataMonitorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="Levels" EntityType="Self.Level" />
+          <EntitySet Name="Metrics" EntityType="Self.Metric" />
+          <EntitySet Name="Notifications" EntityType="Self.Notification" />
+          <EntitySet Name="Sources" EntityType="Self.Source" />
+          <EntitySet Name="Threasholds" EntityType="Self.Threashold" />
+          <AssociationSet Name="FK_Sources_ToClients" Association="Self.FK_Sources_ToClients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Sources" EntitySet="Sources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Metrics_ToSources" Association="Self.FK_Metrics_ToSources">
+            <End Role="Sources" EntitySet="Sources" />
+            <End Role="Metrics" EntitySet="Metrics" />
+          </AssociationSet>
+          <EntitySet Name="Watchers" EntityType="DataMonitorModel.Watcher" />
+          <AssociationSet Name="FK_Watchers_ToClients" Association="DataMonitorModel.FK_Watchers_ToClients">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToLevels" Association="DataMonitorModel.FK_Watchers_ToLevels">
+            <End Role="Level" EntitySet="Levels" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToMetrics" Association="DataMonitorModel.FK_Watchers_ToMetrics">
+            <End Role="Metric" EntitySet="Metrics" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToNotifications" Association="DataMonitorModel.FK_Watchers_ToNotifications">
+            <End Role="Notification" EntitySet="Notifications" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToSources" Association="DataMonitorModel.FK_Watchers_ToSources">
+            <End Role="Source" EntitySet="Sources" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Watchers_ToThreasholds" Association="DataMonitorModel.FK_Watchers_ToThreasholds">
+            <End Role="Threashold" EntitySet="Threasholds" />
+            <End Role="Watcher" EntitySet="Watchers" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Watcher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LevelId" Type="Int32" Nullable="false" />
+          <Property Name="ClientId" Type="Int32" />
+          <Property Name="SourceId" Type="Int32" />
+          <Property Name="MetricId" Type="Int32" />
+          <Property Name="ThreasholdId" Type="Int32" Nullable="false" />
+          <Property Name="NotificationId" Type="Int32" Nullable="false" />
+          <Property Name="LastValue" Type="Int64" />
+          <NavigationProperty Name="Client" Relationship="DataMonitorModel.FK_Watchers_ToClients" FromRole="Watcher" ToRole="Client" />
+          <NavigationProperty Name="Level" Relationship="DataMonitorModel.FK_Watchers_ToLevels" FromRole="Watcher" ToRole="Level" />
+          <NavigationProperty Name="Metric" Relationship="DataMonitorModel.FK_Watchers_ToMetrics" FromRole="Watcher" ToRole="Metric" />
+          <NavigationProperty Name="Notification" Relationship="DataMonitorModel.FK_Watchers_ToNotifications" FromRole="Watcher" ToRole="Notification" />
+          <NavigationProperty Name="Source" Relationship="DataMonitorModel.FK_Watchers_ToSources" FromRole="Watcher" ToRole="Source" />
+          <NavigationProperty Name="Threashold" Relationship="DataMonitorModel.FK_Watchers_ToThreasholds" FromRole="Watcher" ToRole="Threashold" />
+        </EntityType>
+        <Association Name="FK_Watchers_ToClients">
+          <End Type="DataMonitorModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToLevels">
+          <End Type="DataMonitorModel.Level" Role="Level" Multiplicity="1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Level">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="LevelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToMetrics">
+          <End Type="DataMonitorModel.Metric" Role="Metric" Multiplicity="0..1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Metric">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="MetricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToNotifications">
+          <End Type="DataMonitorModel.Notification" Role="Notification" Multiplicity="1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="NotificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToSources">
+          <End Type="DataMonitorModel.Source" Role="Source" Multiplicity="0..1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="SourceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Watchers_ToThreasholds">
+          <End Type="DataMonitorModel.Threashold" Role="Threashold" Multiplicity="1" />
+          <End Type="DataMonitorModel.Watcher" Role="Watcher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Threashold">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Watcher">
+              <PropertyRef Name="ThreasholdId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataMonitorModelStoreContainer" CdmEntityContainer="DataMonitorEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DataMonitorModel.Client">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DBServer" ColumnName="DBServer" />
+                <ScalarProperty Name="Database" ColumnName="Database" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Levels">
+            <EntityTypeMapping TypeName="DataMonitorModel.Level">
+              <MappingFragment StoreEntitySet="Levels">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Metrics">
+            <EntityTypeMapping TypeName="DataMonitorModel.Metric">
+              <MappingFragment StoreEntitySet="Metrics">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notifications">
+            <EntityTypeMapping TypeName="DataMonitorModel.Notification">
+              <MappingFragment StoreEntitySet="Notifications">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sources">
+            <EntityTypeMapping TypeName="DataMonitorModel.Source">
+              <MappingFragment StoreEntitySet="Sources">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Table" ColumnName="Table" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Threasholds">
+            <EntityTypeMapping TypeName="DataMonitorModel.Threashold">
+              <MappingFragment StoreEntitySet="Threasholds">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Watchers">
+            <EntityTypeMapping TypeName="DataMonitorModel.Watcher">
+              <MappingFragment StoreEntitySet="Watchers">
+                <ScalarProperty Name="LastValue" ColumnName="LastValue" />
+                <ScalarProperty Name="NotificationId" ColumnName="NotificationId" />
+                <ScalarProperty Name="ThreasholdId" ColumnName="ThreasholdId" />
+                <ScalarProperty Name="MetricId" ColumnName="MetricId" />
+                <ScalarProperty Name="SourceId" ColumnName="SourceId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="LevelId" ColumnName="LevelId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
