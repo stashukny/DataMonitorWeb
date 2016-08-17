@@ -6,7 +6,10 @@
     <title>@ViewBag.Title - DataMonitor</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @if (IsSectionDefined("AddToHead"))
+    {
+        @RenderSection("AddToHead", required:false)
+    }
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,13 +24,12 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">                    
+                    <li>@Html.ActionLink("Watchers", "Index", "Watchers")</li>
                     <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
                     <li>@Html.ActionLink("Sources", "Index", "Sources")</li>
-                    <li>@Html.ActionLink("Metrics", "Index", "Metrics")</li>
-                    <li>@Html.ActionLink("Levels", "Index", "Levels")</li>
+                    <li>@Html.ActionLink("Metrics", "Index", "Metrics")</li>                    
                     <li>@Html.ActionLink("Threasholds", "Index", "Threasholds")</li>                    
-                    <li>@Html.ActionLink("Notifications", "Index", "Notifications")</li>                                        
-                    <li>@Html.ActionLink("Watchers", "Index", "Watchers")</li>
+                    <li>@Html.ActionLink("Notifications", "Index", "Notifications")</li>                                                            
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

@@ -10,7 +10,7 @@ using DataMonitorWeb.Models;
 
 namespace DataMonitorWeb.Controllers
 {
-    public class NotificationsController : Controller
+    public class NotificationsController : ControllerBase
     {
         private DataMonitorEntities db = new DataMonitorEntities();
 
@@ -51,7 +51,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Notifications.Add(notification);
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(notification);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +86,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(notification).State = EntityState.Modified;
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(notification);
+                }
                 return RedirectToAction("Index");
             }
             return View(notification);
@@ -111,7 +117,10 @@ namespace DataMonitorWeb.Controllers
         {
             Notification notification = db.Notifications.Find(id);
             db.Notifications.Remove(notification);
-            db.SaveChanges();
+            if (HaveErrors(db))
+            {
+                return View(notification);
+            }
             return RedirectToAction("Index");
         }
 

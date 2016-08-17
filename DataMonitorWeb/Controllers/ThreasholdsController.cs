@@ -10,7 +10,7 @@ using DataMonitorWeb.Models;
 
 namespace DataMonitorWeb.Controllers
 {
-    public class ThreasholdsController : Controller
+    public class ThreasholdsController : ControllerBase
     {
         private DataMonitorEntities db = new DataMonitorEntities();
 
@@ -51,7 +51,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Threasholds.Add(threashold);
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(threashold);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +86,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(threashold).State = EntityState.Modified;
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(threashold);
+                }
                 return RedirectToAction("Index");
             }
             return View(threashold);
@@ -111,7 +117,10 @@ namespace DataMonitorWeb.Controllers
         {
             Threashold threashold = db.Threasholds.Find(id);
             db.Threasholds.Remove(threashold);
-            db.SaveChanges();
+            if (HaveErrors(db))
+            {
+                return View(threashold);
+            }
             return RedirectToAction("Index");
         }
 

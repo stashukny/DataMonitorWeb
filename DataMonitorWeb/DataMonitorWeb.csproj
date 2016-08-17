@@ -181,6 +181,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ControllerBase.cs" />
+    <Compile Include="Helpers\EfStatus.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Client.cs">
       <DependentUpon>DataMonitorModel.tt</DependentUpon>
@@ -220,6 +222,7 @@
     <Compile Include="Models\Watcher.cs">
       <DependentUpon>DataMonitorModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Partial\WatcherPartial.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Controllers\LevelsController.cs" />

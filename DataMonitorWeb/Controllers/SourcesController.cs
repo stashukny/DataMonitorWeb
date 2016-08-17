@@ -10,7 +10,7 @@ using DataMonitorWeb.Models;
 
 namespace DataMonitorWeb.Controllers
 {
-    public class SourcesController : Controller
+    public class SourcesController : ControllerBase
     {
         private DataMonitorEntities db = new DataMonitorEntities();
 
@@ -53,7 +53,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Sources.Add(source);
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(source);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -87,7 +90,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(source).State = EntityState.Modified;
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(source);
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", source.ClientId);
@@ -116,7 +122,10 @@ namespace DataMonitorWeb.Controllers
         {
             Source source = db.Sources.Find(id);
             db.Sources.Remove(source);
-            db.SaveChanges();
+            if (HaveErrors(db))
+            {
+                return View(source);
+            }
             return RedirectToAction("Index");
         }
 

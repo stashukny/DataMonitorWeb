@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using DataMonitorWeb.Models;
 
 namespace DataMonitorWeb.Controllers
 {
-    public class ClientsController : Controller
+    public class ClientsController : ControllerBase
     {
         private DataMonitorEntities db = new DataMonitorEntities();
 
@@ -50,8 +47,13 @@ namespace DataMonitorWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Clients.Add(client);
-                db.SaveChanges();
+                db.Clients.Add(client);                
+
+                if (HaveErrors(db))
+                {                    
+                    return View(client);
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +85,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(client);
+                }
                 return RedirectToAction("Index");
             }
             return View(client);
@@ -111,8 +116,14 @@ namespace DataMonitorWeb.Controllers
         {
             Client client = db.Clients.Find(id);
             db.Clients.Remove(client);
-            db.SaveChanges();
+
+            if (HaveErrors(db))
+            {
+                return View(client);
+            }
+
             return RedirectToAction("Index");
+
         }
 
         protected override void Dispose(bool disposing)

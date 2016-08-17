@@ -10,7 +10,7 @@ using DataMonitorWeb.Models;
 
 namespace DataMonitorWeb.Controllers
 {
-    public class MetricsController : Controller
+    public class MetricsController : ControllerBase
     {
         private DataMonitorEntities db = new DataMonitorEntities();
 
@@ -53,7 +53,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Metrics.Add(metric);
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(metric);
+                }
                 return RedirectToAction("Index");
             }
 
@@ -87,7 +90,10 @@ namespace DataMonitorWeb.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(metric).State = EntityState.Modified;
-                db.SaveChanges();
+                if (HaveErrors(db))
+                {
+                    return View(metric);
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name", metric.SourceId);
@@ -116,7 +122,10 @@ namespace DataMonitorWeb.Controllers
         {
             Metric metric = db.Metrics.Find(id);
             db.Metrics.Remove(metric);
-            db.SaveChanges();
+            if (HaveErrors(db))
+            {
+                return View(metric);
+            }
             return RedirectToAction("Index");
         }
 
