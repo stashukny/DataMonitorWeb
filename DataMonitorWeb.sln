@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMonitorWeb", "DataMonit
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DataMonitor", "DataMonitor\DataMonitor.sqlproj", "{89D98A57-B046-4286-AA1F-FCC26DFB653C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMonitorConsole", "DataMonitorConsole\DataMonitorConsole.csproj", "{3FC0B769-195A-4C3A-BDFF-265E60BC3BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{89D98A57-B046-4286-AA1F-FCC26DFB653C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D98A57-B046-4286-AA1F-FCC26DFB653C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89D98A57-B046-4286-AA1F-FCC26DFB653C}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3FC0B769-195A-4C3A-BDFF-265E60BC3BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FC0B769-195A-4C3A-BDFF-265E60BC3BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FC0B769-195A-4C3A-BDFF-265E60BC3BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FC0B769-195A-4C3A-BDFF-265E60BC3BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

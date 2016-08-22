@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DataMonitor" Class="WatchersDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=localhost;Initial Catalog=DataMonitor;Integrated Security=True" SettingsObjectName="DataMonitorConsole.Properties.Settings" SettingsPropertyName="DataMonitorConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.vWatchers" Member="vWatchers">
+    <Type Name="vWatcher">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LevelName" Type="System.String" DbType="NChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ClientName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="DBServer" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="[Database]" Member="Database" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="SourceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SourceName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="[Table]" Member="Table" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="MetricId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MetricName" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LastValue" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ThreasholdName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Percentage" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Watchers" Member="Watchers">
+    <Type Name="Watcher">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="LevelId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ClientId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SourceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MetricId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ThreasholdId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="NotificationId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastValue" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

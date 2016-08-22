@@ -59,6 +59,7 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Snapshots" />
+    <Folder Include="Views" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Threasholds.sql" />
@@ -66,6 +67,7 @@
     <Build Include="Tables\Levels.sql" />
     <Build Include="Tables\Notifications.sql" />
     <Build Include="Tables\Watchers.sql" />
+    <Build Include="Views\vWatchers.sql" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Metrics.sql" />
