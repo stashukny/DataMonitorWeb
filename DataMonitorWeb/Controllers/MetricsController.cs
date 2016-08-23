@@ -39,6 +39,7 @@ namespace DataMonitorWeb.Controllers
         // GET: Metrics/Create
         public ActionResult Create()
         {
+            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name");
             ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name");
             return View();
         }
@@ -62,6 +63,36 @@ namespace DataMonitorWeb.Controllers
 
             ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name", metric.SourceId);
             return View(metric);
+        }
+
+        //public JsonResult GetSourcesByClient(int ClientId)
+        //{
+        //    var sources = db.Sources.Where(s => s.ClientId == ClientId);
+        //    return Json(sources);
+        //}
+
+        public ActionResult Sources(int ClientId)
+        {
+            var sources = db.Sources.Where(s => s.ClientId == ClientId).Select(s => new { SourceId = s.Id });
+            return Json(
+                sources,
+                JsonRequestBehavior.AllowGet
+            );
+        }
+
+        public JsonResult Sources_List(int ClientId)
+        {
+            var sources = db.Sources
+            .Where(f => f.ClientId == ClientId)
+            .ToList()
+            .Select(c => new
+            {
+                c.ClientId,
+                SourceId = c.Id,
+                Text = c.Name
+            });
+
+            return Json(new SelectList(sources.ToArray(), "SourceId", "Text"), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Metrics/Edit/5
