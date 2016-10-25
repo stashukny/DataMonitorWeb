@@ -71,6 +71,34 @@ namespace DataMonitorWeb.Controllers
             return View(watcher);
         }
 
+        public JsonResult Sources_List(int ClientId)
+        {
+            var sources = db.Sources
+            .Where(f => f.ClientId == ClientId)
+            .ToList()
+            .Select(c => new
+            {                
+                SourceId = c.Id,
+                SourceText = c.Name
+            });
+
+            return Json(new SelectList(sources.ToArray(), "SourceId", "SourceText"), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Metrics_List(int SourceId)
+        {
+            var metrics = db.Metrics
+            .Where(f => f.SourceId == SourceId)
+            .ToList()
+            .Select(c => new
+            {                
+                MetricId = c.Id,
+                MetricText = c.Name
+            });
+
+            return Json(new SelectList(metrics.ToArray(), "MetricId", "MetricText"), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Watchers/Edit/5
         public ActionResult Edit(int? id)
         {

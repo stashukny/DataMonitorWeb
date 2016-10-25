@@ -65,21 +65,6 @@ namespace DataMonitorWeb.Controllers
             return View(metric);
         }
 
-        //public JsonResult GetSourcesByClient(int ClientId)
-        //{
-        //    var sources = db.Sources.Where(s => s.ClientId == ClientId);
-        //    return Json(sources);
-        //}
-
-        public ActionResult Sources(int ClientId)
-        {
-            var sources = db.Sources.Where(s => s.ClientId == ClientId).Select(s => new { SourceId = s.Id });
-            return Json(
-                sources,
-                JsonRequestBehavior.AllowGet
-            );
-        }
-
         public JsonResult Sources_List(int ClientId)
         {
             var sources = db.Sources
@@ -87,12 +72,12 @@ namespace DataMonitorWeb.Controllers
             .ToList()
             .Select(c => new
             {
-                c.ClientId,
+                //c.ClientId,
                 SourceId = c.Id,
-                Text = c.Name
+                SourceText = c.Name
             });
 
-            return Json(new SelectList(sources.ToArray(), "SourceId", "Text"), JsonRequestBehavior.AllowGet);
+            return Json(new SelectList(sources.ToArray(), "SourceId", "SourceText"), JsonRequestBehavior.AllowGet);
         }
 
         // GET: Metrics/Edit/5
