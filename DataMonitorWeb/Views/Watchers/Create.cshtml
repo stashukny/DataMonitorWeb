@@ -38,79 +38,26 @@
                 @Html.DropDownList("ClientId", null, "-- All", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        @*<script type="text/jscript">
-
-            function refreshSources() {                
-                var init = "<option>Please Select</option>";
-                $('#SourceId').html(init);
-                var items = init;
-                $.getJSON('/Watchers/Sources_List/' + $('#ClientId').val(), { ClientId: $('#ClientId').val() }, function (data) {                                        
-                    $.each(data, function (i, list) {
-                    items += "<option value='" + list.Value + "'>" + list.Text + "</option>";
-                });
-                    $('#SourceId').html(items);
-                    selectIfOne('#SourceId');
-                });
-
-                $('#MetricId').html(init);
-
-                
-            }
-
-            function selectIfOne(selector) {
-                var currControl = document.getElementById(control);
-                alert(currControl);
-                var length = $('$(selector) > option').length;
-                alert("test" + length);
-                if (length == 2)
-                {                    
-                    $('$(selector)>option:eq(1)').attr('selected', true);
-                    refreshMetrics();
-                }
-            }
-
-            function refreshMetrics() {                
-                $.getJSON('/Watchers/Metrics_List/' + $('#SourceId').val(), { SourceId: $('#SourceId').val() }, function (data) {                                        
-                    var items = "<option>Please Select</option>";
-                    $.each(data, function (i, list) {
-                        items += "<option value='" + list.Value + "'>" + list.Text + "</option>";
-                    });
-                    $('#MetricId').html(items);
-                });
-            }
-
-        $(function () {
-            $('#ClientId')                
-                .change(refreshSources)                
-        });
-
-        $(function () {
-            $('#SourceId')                
-                .change(refreshMetrics)
-                
-        });
-        </script>*@
+        </div>      
 
         <div class="form-group">
             @Html.LabelFor(model => model.SourceId, "SourceId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownList("SourceId", null, "-- All", new { @class = "form-control" })*@
-                <select id="SourceId">
+            <div class="col-md-10">                
+                @*<select id="SourceId" name="SourceId">
                     <option>Please Select</option>
-                </select>
+                </select>*@
+                @Html.DropDownList("SourceId", null, "-- Please Select", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SourceId, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MetricId, "MetricId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">                
-                @*@Html.DropDownList("MetricId", null, "-- All", new { @class = "form-control" })*@
-                <select id="MetricId">
+            <div class="col-md-10">                                
+                @*<select id="MetricId" name="MetricId">
                     <option>Please Select</option>
-                </select>
+                </select>*@
+                @Html.DropDownList("MetricId", null, "-- Please Select", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MetricId, "", new { @class = "text-danger" })
             </div>
         </div>

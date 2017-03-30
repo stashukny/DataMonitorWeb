@@ -16,7 +16,11 @@ $clients.on("change", function () {
                 html += "<option value='" + data[i].Value + "'>" + data[i].Text + "</option>";
             }
             $sources.html(html);
-            selectIfOne($sources);
+            
+            if (data.length == 1)
+            {
+                selectOne($sources);
+            }       
         });
     }
 });
@@ -32,15 +36,17 @@ $sources.on("change", function () {
             }
 
             $metrics.html(html);
-            selectIfOne($metrics);
+
+            if (data.length == 1) {
+                selectOne($metrics);
+            }
         });
     }
 });
 
-function selectIfOne(selector) {
-    var length = $(selector).length;    
-    if (length == 1) {
+
+function selectOne(selector, name) {
+    //alert("got here");
         $(selector).prop('selectedIndex', 1);
-        $(selector).trigger("change");
-    }
+        $(selector).trigger("change");    
 }

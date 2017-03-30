@@ -44,14 +44,15 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Client
+            </th>
+            <th>
+                Source
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Table)
             </th>
-            <th>
-                Client
-            </th>
+
             <th></th>
             <th></th>
             <th></th>
@@ -62,14 +63,15 @@
         {
             <tr>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Table)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Client.Name)
-                </td>
+
                 <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
                 <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
                 <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id })</td>

@@ -76,5 +76,6 @@
   <ItemGroup>
     <None Include="Snapshots\DataMonitor_20160805_11-51-07.dacpac" />
     <None Include="DataMonitor.publish.xml" />
+    <None Include="DataMonitor_1.publish.xml" />
   </ItemGroup>
 </Project>

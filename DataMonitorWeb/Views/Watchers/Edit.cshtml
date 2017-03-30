@@ -5,7 +5,7 @@
 }
 
 <h2>Edit</h2>
-
+<script type="text/javascript" language="javascript" src="/Scripts/jquery-3.1.0.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -44,7 +44,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SourceId, "SourceId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("SourceId", null, "-- All", new { @class = "form-control" })
+                @*<select id="SourceId" name="SourceId">
+                    <option>Please Select</option>
+                </select>*@
+                @Html.DropDownList("SourceId", null, "-- Please Select", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.SourceId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +55,10 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MetricId, "MetricId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("MetricId", null, "-- All", new { @class = "form-control" })
+                @*<select id="MetricId" name="MetricId">
+                    <option>Please Select</option>
+                </select>*@
+                @Html.DropDownList("MetricId", null, "-- Please Select", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MetricId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -96,3 +102,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="~/Scripts/site.js"></script>

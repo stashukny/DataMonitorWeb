@@ -9,6 +9,8 @@
     [ThreasholdId] INT NOT NULL,     
     [NotificationId] INT NOT NULL, 
 	[LastValue] BIGINT,
+	[DateModified] DATETIME NOT NULL DEFAULT GETDATE(),
+	[ModifiedBy] NVARCHAR(50) NULL,
     CONSTRAINT [FK_Watchers_ToLevels] FOREIGN KEY ([LevelId]) REFERENCES [Levels]([Id]),
 	CONSTRAINT [FK_Watchers_ToClients] FOREIGN KEY ([ClientId]) REFERENCES [Clients]([Id]), 
 	CONSTRAINT [FK_Watchers_ToSources] FOREIGN KEY ([SourceId]) REFERENCES [Sources]([Id]),

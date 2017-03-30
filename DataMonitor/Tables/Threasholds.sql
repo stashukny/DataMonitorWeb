@@ -2,5 +2,7 @@
 (
 	[Id] INT NOT NULL IDENTITY(1,1) PRIMARY KEY, 
     [Name] NVARCHAR(50) NOT NULL, 
-    [Percentage] INT NOT NULL
+    [Percentage] INT NOT NULL,
+	[DateModified] DATETIME NOT NULL DEFAULT GETDATE(),
+	[ModifiedBy] NVARCHAR(50) NULL
 )

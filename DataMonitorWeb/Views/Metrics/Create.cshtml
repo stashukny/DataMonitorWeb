@@ -19,37 +19,20 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Source.ClientId, "ClientId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ClientId", null, "-- All", new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Source.ClientId, "", new { @class = "text-danger" })
 
             </div>
-        </div>
-
-        <script type="text/jscript">
-
-            var callFunction = function () {
-                $.getJSON('/Metrics/Sources_List/' + $('#ClientId').val(), { ClientId: $('#ClientId').val() }, function (data) {                    
-                var items;                
-                $.each(data, function (i, source) {
-                    items += "<option value='" + source.Value + "'>" + source.Text + "</option>";
-                });
-                $('#SourceId').html(items);
-            });
-        }
-
-        $(function () {
-            $('#ClientId')
-                .ready(callFunction)
-                .change(callFunction);
-        });
-        </script>
+        </div>       
 
         <div class="form-group">
             @Html.LabelFor(model => model.SourceId, "SourceId", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @*@Html.DropDownList("SourceId", null, htmlAttributes: new { @class = "form-control" })*@
-                <select id="SourceId"></select>
-                @Html.ValidationMessageFor(model => model.SourceId, "", new { @class = "text-danger" })
+            <div class="col-md-10">                
+                @*<select id="SourceId" name="SourceId">
+                    <option>Please Select</option>
+                </select>*@
+                @Html.DropDownList("SourceId", null, "-- Please Select", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SourceId, "", new { @class = "text-danger" })                
 
             </div>
         </div>
@@ -77,5 +60,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
+<script src="~/Scripts/site_metrics.js"></script>
 

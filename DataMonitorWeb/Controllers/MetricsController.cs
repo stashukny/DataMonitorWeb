@@ -49,13 +49,15 @@ namespace DataMonitorWeb.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,SourceId,Name")] Metric metric)
+        public ActionResult Create([Bind(Include = "ClientId, Id,SourceId,Name,selectedSourceId")] Metric metric)
         {
             if (ModelState.IsValid)
             {
                 db.Metrics.Add(metric);
                 if (HaveErrors(db))
                 {
+                    ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name");
+                    ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name");
                     return View(metric);
                 }
                 return RedirectToAction("Index");
@@ -92,7 +94,9 @@ namespace DataMonitorWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name", metric.SourceId);
+            ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", metric.Source.ClientId);            
+            //ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name", metric.SourceId);
+            ViewBag.SourceId = new SelectList(db.Sources.Where(f => f.ClientId == metric.Source.ClientId), "Id", "Name", metric.SourceId);
             return View(metric);
         }
 

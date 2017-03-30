@@ -113,9 +113,10 @@ namespace DataMonitorWeb.Controllers
             }
             ViewBag.ClientId = new SelectList(db.Clients, "Id", "Name", watcher.ClientId);
             ViewBag.LevelId = new SelectList(db.Levels, "Id", "Name", watcher.LevelId);
-            ViewBag.MetricId = new SelectList(db.Metrics, "Id", "Name", watcher.MetricId);
+            ViewBag.SourceId = new SelectList(db.Sources.Where(f => f.ClientId == watcher.ClientId), "Id", "Name", watcher.SourceId);
+            ViewBag.MetricId = new SelectList(db.Metrics.Where(f => f.SourceId == watcher.SourceId), "Id", "Name", watcher.MetricId);
             ViewBag.NotificationId = new SelectList(db.Notifications, "Id", "Name", watcher.NotificationId);
-            ViewBag.SourceId = new SelectList(db.Sources, "Id", "Name", watcher.SourceId);
+            
             ViewBag.ThreasholdId = new SelectList(db.Threasholds, "Id", "Name", watcher.ThreasholdId);
             return View(watcher);
         }

@@ -5,7 +5,7 @@
 }
 
 <h2>Edit</h2>
-
+<script type="text/javascript" language="javascript" src="/Scripts/jquery-3.1.0.js"></script>
 
 @using (Html.BeginForm())
 {
@@ -16,6 +16,15 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Source.ClientId, "ClientId", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClientId", null, "-- All", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Source.ClientId, "", new { @class = "text-danger" })
+
+            </div>
+        </div>      
 
         <div class="form-group">
             @Html.LabelFor(model => model.SourceId, "SourceId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -48,3 +57,4 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script src="~/Scripts/site_metrics.js"></script>

@@ -56,16 +56,16 @@
                 Level
             </th>
             <th>
-                Metric
-            </th>
-            <th>
-                Notification
-            </th>
-            <th>
                 Source
             </th>
             <th>
+                Metric
+            </th>
+            <th>
                 Threashold
+            </th>
+            <th>
+                Notification
             </th>
             <th></th>
             <th></th>
@@ -89,16 +89,16 @@
                     @Html.DisplayFor(modelItem => item.Level.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Metric.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notification.Name)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Source.Name)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Metric.Name)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Threashold.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notification.Name)
                 </td>
                 <td>@Html.ActionLink("Edit", "Edit", new { id = item.Id })</td>
                 <td>@Html.ActionLink("Details", "Details", new { id = item.Id })</td>
